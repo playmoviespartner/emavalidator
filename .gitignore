@@ -1,0 +1,3 @@
+# excluse DS files from Mac
+.DS_Store
+bin/emavalidator

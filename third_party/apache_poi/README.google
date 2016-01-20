@@ -1,0 +1,19 @@
+URL: http://archive.apache.org/dist/poi/release/bin/
+Version: 3.10-FINAL
+License: Apache 2.0
+License File: LICENSE
+
+Description:
+The core library and set of JARs for manipulating excel files. Used to open
+individual worksheets within workbooks and parse the contents cell value by cell
+value. The exact build number is 3.10-FINAL-20140208. Please note only the
+following JARs from the overall package are used:
+1)
+poi-3.10-FINAL-20140208.jar
+2) poi-ooxml-3.10-FINAL-20140208.jar
+3)
+poi-ooxml-schemas-3.10-FINAL-20140208.jar
+
+Local Modifications:
+No direct modifications to the libraries themselves but only 3 of the 6 JARs
+from the overall package are used and included here.
