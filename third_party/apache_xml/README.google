@@ -1,9 +1,0 @@
-URL: http://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans/2.6.0
-Version: 2.6.0
-License: Apache 2.0
-License File: LICENSE
-
-Description:
-An associated helper library for the Apache POI spreadsheet parsing library
-
-Local Modifications:
