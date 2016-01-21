@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>com.emavalidator.appengine.server.Upload</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/emavalidatorappengine/upload</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Serve</servlet-name>
+    <servlet-class>com.emavalidator.appengine.server.Serve</servlet-class>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>Serve</servlet-name>
+    <url-pattern>/emavalidatorappengine/serve</url-pattern>
+  </servlet-mapping>
+  
+ 
+  <servlet>
+  	<servlet-name>Init</servlet-name>
+  	<servlet-class>com.emavalidator.appengine.server.Init</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Init</servlet-name>
+  	<url-pattern>/emavalidator</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+   
+</web-app>

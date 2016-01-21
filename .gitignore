@@ -1,6 +1,6 @@
 # excluse DS files from Mac
 .DS_Store
-bin
+bin/emavalidator
 emavalidatorappengine/war/WEB-INF/appengine-generated
 emavalidatorappengine/war/emavalidatorappengine/*.cache.js
 emavalidatorappengine/gwt-unitCache

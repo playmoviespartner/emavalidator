@@ -1,0 +1,170 @@
+
+<html>
+    <head>
+        <title>EMA Movies/TV/Digital Avails Web Validator</title>
+        <meta name="description" content="Automatically validate EMA input avail worksheets against the EMA standard templates published at the Movie Labs website to find any errors in formatting or input values. The EMA standard is used to efficiently communicate tv and film data between studios and production houses to digital media distribution companies.">
+        
+			<link rel="stylesheet" href="/css/bootstrap.css"/>
+			<link rel="stylesheet" href="/css/bootstrapValidator.min.css"/>
+
+			<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+			<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="/js/bootstrapValidator.min.js"></script>
+			<script type="text/javascript" src="//www.gstatic.com/feedback/api.js"></script>
+			<script type="text/javascript" src="/_ah/channel/jsapi"></script>
+			<script>
+		     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		    
+		     ga('create', 'UA-43436420-2', 'auto');
+		     ga('send', 'pageview');
+
+		    </script>
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+				    $('#buttonGroupForm').bootstrapValidator({
+				        excluded: ':disabled',
+				        fields: {
+				            inputFile: {
+				                validators: {
+				                    file: {
+				                        extension: 'csv,txt,xls,xlsx,xml', // http://technet.microsoft.com/en-us/library/ee309278%28office.12%29.aspx http://stackoverflow.com/questions/4212861/what-is-a-correct-mime-type-for-docx-pptx-etc http://www.sitepoint.com/web-foundations/mime-types-complete-list/
+				                        type: 'text/xml,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/excel,application/vnd.ms-excel,application/x-excel,application/x-msexcel',
+				                        maxSize: 52428800,// 50 Megabytes in the correct power of 2 byte representation
+				                        message: 'Please verify the extension is XLS, XLSX, XML, CSV, or TXT and that file size is < 50MB.'
+				                    },
+				                    notEmpty: {
+				                        message: 'Please choose an input file to validate.'
+				                    }
+				                }
+				            }
+				        }
+				    });
+				});
+			</script>
+	<style>
+		div[id='loader'] {
+			width: 64px;
+			height: 64px;
+			background-image:url("https://ssl.gstatic.com/s2/oz/images/notifications/spinner_64_3f4fa14117c586c002a98cd7c5fbb2d3.gif");
+			background-repeat: no-repeat;
+		}
+	</style>
+    </head>
+    
+    <body>
+    
+    	<a href="http://www.movielabs.com/md/avails/" target="_blank"><center><H1>EMA Movies/TV/Digital Avails Web Validator (Beta)</a>
+      	
+    	</H1></center>
+    
+        <form action="{{ form_action_url }}" method="post" enctype="multipart/form-data" id="buttonGroupForm" class="form-horizontal">
+		    
+		    <div class="form-group">
+		        <label class="col-lg-3 control-label" title="Choose your input file that you wish to validate.">Input EMA File</label>
+		        <div class="col-lg-5">
+		            <input id="file_uploader" type="file" class="form-control" name="inputFile" title="Click to select a file on your local computer to validate."/>
+		        </div>
+		    </div>
+		    <p align="center">Accepts XLS, XLSX, XML, CSV, or TXT</p>
+		    <p align="center">*Please allow up to 5 minutes for very large files greater than 15MB.</p>
+            <center>
+            	<div id="loader" style="display: none;">
+            	</div>
+	            <div>
+	            	<h1 id="columnErrors" style="display: none;"></h1>
+				</div>
+			</center>
+			
+			<div>
+				<pre id="resultsOutput">
+				</pre>
+			</div>
+    </body>
+    
+    <script type="text/javascript">
+        function onOpened() {  };
+        function onMessage(message) { showBusyIcon(false); printResults(message.data); };
+        function onError() {  };
+        function onClose() {  };
+
+		initialize = function() {
+		    channel = new goog.appengine.Channel('{{ token }}');
+		    socket = channel.open();
+		    socket.onopen = onOpened;
+		    socket.onmessage = onMessage;
+		    socket.onerror = onError;
+		    socket.onclose = onClose;
+    	}
+    	
+    	setTimeout(initialize, 100);
+    	
+    	function printResults(data) {
+    		// dataArray[0] = fileType
+    		// dataArray[1] = if CSV or XLS: # of errors (XML does not show errors div)
+    		//				  if XML: Valid or Invalid
+    		// dataArray[2] = Error String
+    		var dataArray = data.split('`');
+    		
+    		if (dataArray[0] === "csv" || dataArray[0] === "xls") {
+	    		document.getElementById("columnErrors").innerHTML = "Errors in: " + dataArray[1] + " columns";
+    			document.getElementById("resultsOutput").innerHTML = dataArray[2];
+    			$('#columnErrors').css('display', 'block');
+    		} else if (dataArray[0] === "xml") {
+    			// if XML validated
+    			console.log(dataArray);
+    			if (dataArray[1] === "true") {
+	    			document.getElementById("columnErrors").innerHTML = "XML validated successfully.";
+    			} else {
+    				document.getElementById("columnErrors").innerHTML = "XML is invalid.";
+    			}
+    		    document.getElementById("resultsOutput").innerHTML = dataArray[2];
+    		    $('#columnErrors').css('display', 'block');
+    		} else {
+	    		document.getElementById("columnErrors").innerHTML = dataArray[1];
+    			document.getElementById("resultsOutput").innerHTML = dataArray[2];
+    		}
+    	};
+    	
+    	function printErrors(errorData) {
+    		showBusyIcon(false);
+    		document.getElementById("resultsOutput").innerHTML = errorData;
+    	};
+    	
+    	function showBusyIcon(showIcon) {
+    		if (showIcon) {
+	    		$('#loader').css('display', 'block');
+    		} else {
+	    		$('#loader').css('display', 'none');
+    		}
+    	};
+    	
+    	function progressHandlingFunction() {
+    		document.getElementById("resultsOutput").innerHTML = "Upload in progress.";
+    	};
+    
+		document.getElementById("file_uploader").onchange = function() {
+   			var formData = new FormData($('form')[0]);
+   			var uploadUrl = '{{ form_action_url }}';
+   			var otherData = '{{ token }}';
+   			formData.append('channelID', otherData)
+   			var ajaxOptions = {
+   								url: uploadUrl,  //Server script to process data
+   								type: 'POST',
+   								beforeSend: function() { showBusyIcon(true); },
+   								error: function() { printErrors("Sorry. An error has occurred."); },
+   								success: function(data) { console.log(data); },
+   								complete: function() {  },
+   								data: formData,
+   								cache: false,
+   								contentType: false,
+   								processData: false,
+   								crossDomain: true
+   							  };
+		    $.ajax(ajaxOptions);
+		};
+	</script>
+</html>
