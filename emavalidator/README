@@ -8,10 +8,10 @@ can also be found there as well.
 
 The program itself will ingest a file formatted as either plain text in CSV
 format or as an excel-based spreadsheet in XLS or XLSX format. ODF is currently
-not supported. This tool has been authored by Sean Canavan.
+not supported. This tool has been authored by Sean Canavan and Christopher Kha.
 
 It is currently available via a web interface at
-http://emavalidator.appengine.com for convenience. This command line alternative
+emavalidator.appspot.com for convenience. This command line alternative
 is provided as a means of automating the validation of files or to simply
 provide a faster and easier solution; albeit more technical.
 
@@ -81,7 +81,8 @@ format will enable this.
 WHERE TO GET THE CODE
 -----------------------
 
-To be determined
+Github:
+https://github.com/playmoviespartner/emavalidator
 
 UML Class Diagram (currently outdated):
 https://repository.genmymodel.com/canavanatgoogledotcom/EMAValidator
