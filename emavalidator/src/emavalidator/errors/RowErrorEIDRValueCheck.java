@@ -24,6 +24,6 @@ public class RowErrorEIDRValueCheck extends AbstractErrorEntry
 
     public RowErrorEIDRValueCheck(int rowNumber, String actualValue)
     {
-        super(rowNumber, RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID, ErrorLevel.ERROR, actualValue, RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID);
+        super(rowNumber, RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID, ErrorLevel.ERROR, actualValue, RowErrorEIDRValueCheck.EXPECTED_EIDR_OR_ID);
     }
 }

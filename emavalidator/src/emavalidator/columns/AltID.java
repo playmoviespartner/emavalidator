@@ -48,7 +48,7 @@ public class AltID extends AbstractColumnDefinition
                                 ErrorLevel.ERROR,
                                 CellErrorSpecificValueFormat.ALT_ID_FORMAT_ERROR,
                                 CellErrorSpecificValueFormat.EXPECTED_VALUES_ALT_ID));
-            this.validators.add(new CellValidatorNotEmpty());
+            //this.validators.add(new CellValidatorNotEmpty());
         }
         else
         {

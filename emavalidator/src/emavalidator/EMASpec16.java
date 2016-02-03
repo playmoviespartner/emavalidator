@@ -111,6 +111,7 @@ public class EMASpec16 extends AbstractEMASpec
         this.rowSpec.addValidator(new RowValidatorEntryType(AbstractEMASpec.EMAVersion.EMASpec16));
         this.rowSpec.addValidator(new RowValidatorDuplicate(AbstractEMASpec.EMAVersion.EMASpec16));
         this.rowSpec.addValidator(new RowValidatorOverlappingWindow(AbstractEMASpec.EMAVersion.EMASpec16));
+        this.rowSpec.addValidator(new RowValidatorAltOrProductID());
     }
 
     @Override
