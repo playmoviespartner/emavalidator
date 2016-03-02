@@ -117,6 +117,19 @@ public abstract class AbstractErrorEntry
      * @param actualValue The value itself that produced the error.
      * @param expectedValue The expected value that the validator was looking for. Can be a concrete value or regex.
      */
+    public AbstractErrorEntry(String errorMessage, ErrorLevel errorLevel, String actualValue, String expectedValue)
+    {
+        this(-1, -1, errorMessage, errorLevel, actualValue, expectedValue);
+    }
+    
+    /**
+     * Instantiate a row validation error with no column specifically set.
+     * @param rowNumber The row number where this error occurred during validation.
+     * @param errorMessage The message to return to the log / user regarding why the error happened.
+     * @param errorLevel The severity of the error that occurred.
+     * @param actualValue The value itself that produced the error.
+     * @param expectedValue The expected value that the validator was looking for. Can be a concrete value or regex.
+     */
     public AbstractErrorEntry(int rowNumber, String errorMessage, ErrorLevel errorLevel, String actualValue, String expectedValue)
     {
         this(rowNumber, -1, errorMessage, errorLevel, actualValue, expectedValue);
@@ -149,6 +162,16 @@ public abstract class AbstractErrorEntry
             return -1;
         return this.errorLocations.get(0).getColumnNumber();
     }
+    
+    /**
+     * @return The row number where this error occured
+     */
+    public int getErrorRowNumber()
+    {
+        if(this.errorLocations.size() == 0)
+            return -1;
+        return this.errorLocations.get(0).getRowNumber();
+    }
 
     /**
      * The standard toString() implementation that should be used.
@@ -164,8 +187,8 @@ public abstract class AbstractErrorEntry
         // WARNING AT {
         returnThis.append(StringUtils.leftPad(this.errorLevel.toString(), 10, ' ')).append(" at {").append(System.lineSeparator());
 
-        //column name: UnsupportedColumn
-        if(this.getErrorColumnNumber() != -1) // if this isn't a row based error, then output the column specific information for the user
+        // if this isn't a row based error, then output the column specific information for the user
+        if(this.getErrorColumnNumber() != -1 && this.getErrorRowNumber() != -1) 
         {
             returnThis.append('\t')
                       .append(StringUtils.leftPad("column name: ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
@@ -173,12 +196,19 @@ public abstract class AbstractErrorEntry
                       .append(System.lineSeparator());
         }
         // type: Row Validation Error
-        else // let them know that it was a row validation error and no single column is to blame
+        // let them know that it was a row validation error and no single column is to blame
+        else if (this.getErrorColumnNumber() == -1 && this.getErrorRowNumber() != -1)
         {
             returnThis.append('\t')
                       .append(StringUtils.leftPad("type: ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
                       .append("Row Validation Error")
                       .append(System.lineSeparator());
+        }
+        // Overall error.
+        // No row nor column is to blame. This is an overall error
+        else if (this.getErrorColumnNumber() == -1 && this.getErrorRowNumber() == -1)
+        {
+            
         }
 
         //error count: 22
@@ -187,29 +217,42 @@ public abstract class AbstractErrorEntry
                   .append(String.valueOf(this.errorLocations.size()))
                   .append(System.lineSeparator());
 
-        //  locations: Row: 24 Column(s): 3, 6, 9, 22
-        returnThis.append('\t')
-                  .append(StringUtils.leftPad("location(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
-                  .append(this.getPrettyPrintStringOfErrorLocations())
-                  .append(System.lineSeparator());
-
         // cell value: "Random Column Name"
-        if(this.getErrorColumnNumber() != -1) 
+        if(this.getErrorColumnNumber() != -1 && this.getErrorRowNumber() != -1) 
         {
+            //  locations: Row: 24 Column(s): 3, 6, 9, 22
+            returnThis.append('\t')
+                      .append(StringUtils.leftPad("location(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
+                      .append(this.getPrettyPrintStringOfErrorLocations())
+                      .append(System.lineSeparator());
+            
             returnThis.append('\t')
                       .append(StringUtils.leftPad("cell value(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
                       .append(this.getPrettyPrintStringOfErrorValues())
                       .append(System.lineSeparator());            
         }
         // Values from multiple cells 
-        else 
+        else if (this.getErrorColumnNumber() == -1 && this.getErrorRowNumber() != -1)
+        {
+            //  locations: Row: 24 Column(s): 3, 6, 9, 22
+            returnThis.append('\t')
+                      .append(StringUtils.leftPad("location(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
+                      .append(this.getPrettyPrintStringOfErrorLocations())
+                      .append(System.lineSeparator());
+            
+            returnThis.append('\t')
+                      .append(StringUtils.leftPad("value(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
+                      .append(this.getPrettyPrintStringOfErrorValues())
+                      .append(System.lineSeparator());  
+        }
+        else if (this.getErrorColumnNumber() == -1 && this.getErrorRowNumber() == -1)
         {
             returnThis.append('\t')
                       .append(StringUtils.leftPad("value(s): ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))
                       .append(this.getPrettyPrintStringOfErrorValues())
                       .append(System.lineSeparator());  
         }
-
+        
         //      error: "Unsupported column name for this EMA spec"
         returnThis.append('\t')
                   .append(StringUtils.leftPad("error: ", AbstractErrorEntry.OUTPUT_PAD_LENGTH, ' '))

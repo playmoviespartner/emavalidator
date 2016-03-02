@@ -137,7 +137,8 @@ public final class EMAResourceValidator
         ErrorLog.setCurrentSheet(fileName, emaVersion, emaSpec, 0);
         // reorder the columns in the EMA spec based off of the user's input which doesn't necessarily match the spec itself
         emaSpec.getColumnSpec().reorderColumnDefinitions(columnHeaderDefinitions, EMAResourceValidator.columnHeaderRowIndex);
-
+        // Verify that all column headers are present for an emaVersion.
+        emaSpec.getColumnSpec().verifyColumnDefinitions(emaVersion, columnHeaderDefinitions);
         // validate the sheet with the custom user column input spec
         emaSpec.validate(csvRecords, EMAResourceValidator.dataStartsRowIndex);
         validatorResults = new ValidatorResults(ErrorLog.getFormattedErrorLog(), "csv", false);

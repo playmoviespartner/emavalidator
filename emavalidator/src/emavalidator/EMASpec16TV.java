@@ -18,8 +18,75 @@ package emavalidator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import emavalidator.columns.*;
-import emavalidator.validators.*;
+import emavalidator.columns.Any;
+import emavalidator.columns.AvailID;
+import emavalidator.columns.CaptionExemption;
+import emavalidator.columns.CaptionIncluded;
+import emavalidator.columns.CompanyDisplayCredit;
+import emavalidator.columns.ContractID;
+import emavalidator.columns.Description;
+import emavalidator.columns.DisplayName;
+import emavalidator.columns.EncodeID;
+import emavalidator.columns.End;
+import emavalidator.columns.EntryType;
+import emavalidator.columns.EpisodeAltID;
+import emavalidator.columns.EpisodeContentID;
+import emavalidator.columns.EpisodeCount;
+import emavalidator.columns.EpisodeNumber;
+import emavalidator.columns.EpisodeProductID;
+import emavalidator.columns.EpisodeTitleDisplayUnlimited;
+import emavalidator.columns.EpisodeTitleInternalAlias;
+import emavalidator.columns.ExceptionsFlag;
+import emavalidator.columns.FixedEndDate;
+import emavalidator.columns.FormatProfile;
+import emavalidator.columns.HoldbackExclusionLanguage;
+import emavalidator.columns.HoldbackLanguage;
+import emavalidator.columns.LicenseRightsDescription;
+import emavalidator.columns.LicenseType;
+import emavalidator.columns.LocalizationType;
+import emavalidator.columns.Metadata;
+import emavalidator.columns.OtherInstructions;
+import emavalidator.columns.OtherTerms;
+import emavalidator.columns.PriceType;
+import emavalidator.columns.PriceValue;
+import emavalidator.columns.RatingReason;
+import emavalidator.columns.RatingSystem;
+import emavalidator.columns.RatingValue;
+import emavalidator.columns.ReleaseHistoryOriginal;
+import emavalidator.columns.ReleaseHistoryPhysicalHV;
+import emavalidator.columns.ReleaseYear;
+import emavalidator.columns.RentalDuration;
+import emavalidator.columns.SRP;
+import emavalidator.columns.SeasonAltID;
+import emavalidator.columns.SeasonContentID;
+import emavalidator.columns.SeasonCount;
+import emavalidator.columns.SeasonNumber;
+import emavalidator.columns.SeasonTitleDisplayUnlimited;
+import emavalidator.columns.SeasonTitleInternalAlias;
+import emavalidator.columns.SeriesAltID;
+import emavalidator.columns.SeriesContentID;
+import emavalidator.columns.SeriesTitleDisplayUnlimited;
+import emavalidator.columns.SeriesTitleInternalAlias;
+import emavalidator.columns.ServiceProvider;
+import emavalidator.columns.SpecialPreOrderFulfillDate;
+import emavalidator.columns.Start;
+import emavalidator.columns.StoreLanguage;
+import emavalidator.columns.SuppressionLiftDate;
+import emavalidator.columns.Territory;
+import emavalidator.columns.TotalRunTime;
+import emavalidator.columns.WatchDuration;
+import emavalidator.columns.WorkType;
+import emavalidator.validators.RowValidatorCaptionExemption;
+import emavalidator.validators.RowValidatorCaptionIncluded;
+import emavalidator.validators.RowValidatorDuplicate;
+import emavalidator.validators.RowValidatorDuplicateEpisodeNumber;
+import emavalidator.validators.RowValidatorEntryType;
+import emavalidator.validators.RowValidatorEpisodeNumber;
+import emavalidator.validators.RowValidatorQuestionableStart;
+import emavalidator.validators.RowValidatorSeasonEIDRs;
+import emavalidator.validators.RowValidatorStartLessEnd;
+import emavalidator.validators.RowValidatorSuppressionPreorder;
+import emavalidator.validators.RowValidatorTierOrPrice;
 
 /**
  * A concrete representation of EMASpec which can validate an input set of data against the entire EMA 1.6 TV spec
@@ -86,7 +153,7 @@ public class EMASpec16TV extends AbstractEMASpec
         this.columnSpec.addColumnDefinition(new ReleaseYear());                                   // optional, year values only
         this.columnSpec.addColumnDefinition(new ReleaseHistoryOriginal());                        // optional, exhaustively checked
         this.columnSpec.addColumnDefinition(new ReleaseHistoryPhysicalHV());                      // optional, exhaustively checked
-        this.columnSpec.addColumnDefinition(new ExceptionFlag());                                 // optional, enumerated values
+        this.columnSpec.addColumnDefinition(new ExceptionsFlag());                                 // optional, enumerated values
         this.columnSpec.addColumnDefinition(new RatingSystem());                                  // optional, no symbols
         this.columnSpec.addColumnDefinition(new RatingValue());                                   // optional, no symbols
         this.columnSpec.addColumnDefinition(new RatingReason());                                  // optional, CSV

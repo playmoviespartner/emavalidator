@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import emavalidator.columns.UnsupportedColumn;
+import emavalidator.errors.CellErrorMissingColumn;
 import emavalidator.errors.CellErrorUnsupportedColumn;
 
 /**
@@ -126,5 +127,32 @@ public class ColumnSpec implements Iterable<AbstractColumnDefinition>
     public Iterator<AbstractColumnDefinition> iterator()
     {
         return columnDefinitions.listIterator();
+    }
+    
+    public boolean verifyColumnDefinitions(AbstractEMASpec.EMAVersion emaVersion, ArrayList<String> columnHeaderDefinitions)
+    {
+        ArrayList<String> missingColumns = new ArrayList<String>();
+        ColumnSpec cs = AbstractEMASpec.getInstance(emaVersion).getColumnSpec();
+        
+        // Loop through the spec's column headers and find each column in the inputted column headers
+        for (AbstractColumnDefinition currentColumn : cs.columnDefinitions) 
+        {
+            // Track the missing columns for flagging later.
+            if (!columnHeaderDefinitions.contains(currentColumn.getColumnName()))
+            {
+                missingColumns.add(currentColumn.getColumnName());
+            }
+        }
+        
+        // We have some missing columns.
+        if (!missingColumns.isEmpty())
+        {
+            for (String column : missingColumns) 
+            {
+                ErrorLog.appendError(new CellErrorMissingColumn(column));
+            }
+        }
+        
+        return false;
     }
 }
