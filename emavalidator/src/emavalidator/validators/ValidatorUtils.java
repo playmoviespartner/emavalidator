@@ -137,7 +137,7 @@ public class ValidatorUtils
      * DO_NOT_SELL is a valid tier category for TV EMA Avails v1.7
      */
     //TODO(canavan) rethink this, partners have weird tier names
-    public static final String VALID_TIER_CATEGORY_VALUES_REGEX = "do_not_sell|[a-zA-Z0-9 ]*( |-|\\+)?[a-zA-Z0-9]*";
+    public static final String VALID_TIER_CATEGORY_VALUES_REGEX = "do_not_sell|[a-zA-Z0-9 ]*( |_|-|\\+)?[a-zA-Z0-9]*";
 
     /**
      * Yes, YES, Y, y No, NO, N, n
