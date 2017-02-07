@@ -168,11 +168,10 @@ public abstract class AbstractNotificationEntry
     }
 
     /**
-     * Compares error levels, error message, expected value, and column number. If all 4 are the same, then two errors are considered identical. This is used to aggregate similar errors. This does NOT take VALUE into account.
-     * @return True if philosophically two error values represent the same kind of input mistake made by the operator. False otherwise.
+     * Compares notification column number, details, and message. If all 3 are the same, then two notifications are considered identical. This is used to aggregate similar notifications.
+     * @return True if philosophically two notoficatoin values represent the same kind of input mistake made by the operator. False otherwise.
      */
     @Override
-    //TODO(canavan) This is slow when the list of errors is very large. O(n^2) or close to it unfortunately. Unique error IDs would be awesome or a hash table.
     public boolean equals(Object obj)
     {
         if (!(obj instanceof AbstractNotificationEntry)) // null check not necessary, instanceof returns false if obj == null
