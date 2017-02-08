@@ -169,7 +169,7 @@ public abstract class AbstractNotificationEntry
 
     /**
      * Compares notification column number, details, and message. If all 3 are the same, then two notifications are considered identical. This is used to aggregate similar notifications.
-     * @return True if philosophically two notoficatoin values represent the same kind of input mistake made by the operator. False otherwise.
+     * @return True if philosophically two notification values represent the same kind of input mistake made by the operator. False otherwise.
      */
     @Override
     public boolean equals(Object obj)
@@ -204,6 +204,20 @@ public abstract class AbstractNotificationEntry
             return false;
 
         return true;
+    }
+
+    /**
+     * @return The computed hash code that hsould match in ALL cases where a.equals(b)
+     */
+    @Override
+    public int hashCode() {
+        // don't forget to download the lib for this and fix the project setup:
+        // http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/HashCodeBuilder.html
+        return new org.apache.commons.lang3.builder.HashCodeBuilder(17, 37).
+                append(this.getNotificationColumnNumber()).
+                append(this.notificationDetails).
+                append(this.notificationMessage).
+                toHashCode();
     }
 
     /**

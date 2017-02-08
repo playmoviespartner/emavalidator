@@ -363,6 +363,22 @@ public abstract class AbstractErrorEntry
     }
 
     /**
+     * If you override equals() you have to override hashCode() with the same variables used for comparing.
+     * @return The computed hash code that should match in ALL cases where a.equals(b)
+     */
+    @Override
+    public int hashCode() {
+        // don't forget to download the lib for this and fix the project setup:
+        // http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/HashCodeBuilder.html
+        return new org.apache.commons.lang3.builder.HashCodeBuilder(17, 37).
+                append(this.getErrorColumnNumber()).
+                append(this.errorLevel).
+                append(this.expectedValue).
+                append(this.errorMessage).
+                toHashCode();
+    }
+
+    /**
      * @return The level of severity of this ErrorEntry. Refer to ErrorEntry.ErrorLevel for full documentation.
      */
     public ErrorLevel getErrorLevel() { return this.errorLevel; }
