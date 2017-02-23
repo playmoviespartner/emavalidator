@@ -26,7 +26,7 @@ import emavalidator.errors.RowErrorChronologicalDates;
 
 public class RowValidatorStartLessEnd extends AbstractRowValidator
 {
-    public static final String EXPECTED_CHRONOLOGICAL = "Please be completely sure that the avail's start date is before and not equal to or after the avail's end date. Also make sure that your start and end dates are in the accepted format and values.";
+    public static final String EXPECTED_CHRONOLOGICAL = "Please be completely sure that the avail's start date is before and not equal to or after the avail's end date. Also make sure that your start and end dates are in the same format.";
 
     @Override
     public boolean validate(HashMap<String, String> rowValues, int rowNumber)
@@ -52,16 +52,6 @@ public class RowValidatorStartLessEnd extends AbstractRowValidator
                     return true;
                 else
                 {
-                    // We know two possibilities:
-                    // (1) either Start or End is invalid. Fine-tune the checks here to ignore error message.
-                    if (!ValidatorUtils.isValidStartEndDate(Start.class.getSimpleName(), availStartDate) ||
-                            !ValidatorUtils.isValidStartEndDate(End.class.getSimpleName(), availEndDate))
-                    {
-                        return false;
-                    }
-                    
-                    // (2) Start and End are valid, but they are not in chronological order.
-                    // If the error is not caught above, then we know we have a chronological order error.
                     ErrorLog.appendError(new RowErrorChronologicalDates(
                             rowNumber,
                             RowErrorChronologicalDates.DATES_NOT_CHRONOLOGICAL,

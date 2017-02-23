@@ -19,6 +19,7 @@ import emavalidator.AbstractColumnDefinition;
 import emavalidator.AbstractErrorEntry.ErrorLevel;
 import emavalidator.errors.CellErrorSpecialSymbols;
 import emavalidator.errors.CellErrorSpecificValueFormat;
+import emavalidator.validators.CellValidatorNotEmpty;
 import emavalidator.validators.CellValidatorRegexFormat;
 import emavalidator.validators.CellValidatorSpecialSymbols;
 import emavalidator.validators.ValidatorUtils;
