@@ -36,6 +36,7 @@ Temporary Items
 # gwt caches and compiled units #
 war/gwt_bree/
 gwt-unitCache/
+war/emavalidatorappengine/
 
 # boilerplate generated classes #
 .apt_generated/

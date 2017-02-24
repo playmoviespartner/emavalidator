@@ -15,6 +15,7 @@ limitations under the License.
 
 package emavalidator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -105,7 +106,7 @@ public class SheetErrorSummary
         {
             this.errorLog.put(newError, newError); // initialize the first value in the map
             this.errorCounts.put(newError.getErrorLevel(), 1); // initialize the first error count for this specific error type
-        }        
+        }
     }
 
     /**
@@ -126,6 +127,7 @@ public class SheetErrorSummary
         {
             this.notificationsLog.put(newNotification, newNotification);
         }
+        //this.notificationCount.put();
     }
 
     /**
@@ -183,12 +185,7 @@ public class SheetErrorSummary
     /**
      * @return The total number of columns with errors in this SheetErrorSummary. Calculated by adding up all the error locations of every single error entry in this SheetErrorSummary's error log
      */
-    public int getErrorColumnsCount() { return this.errorLog.keySet().size(); }
-
-    /**
-     * @return The total number of notifications in this SheetErrorSummary. Calculated by adding up all the notification locations of every single notitifcation entry in this SheetErrorSummary's notification log
-     */
-    public int getNotificationCount()
+    public int getErrorColumnsCount()
     {
         int totalNotificationCount = 0;
         for (Entry<AbstractNotificationEntry, AbstractNotificationEntry> entry: notificationsLog.entrySet())
@@ -197,7 +194,7 @@ public class SheetErrorSummary
         }
         return totalNotificationCount;
     }
-
+    
     /**
      * @return This SheetErrorSummary's internal error log. Refer to the ErrorLog class for full documentation.
      */

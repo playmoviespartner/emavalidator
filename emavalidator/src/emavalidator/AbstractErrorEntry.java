@@ -326,6 +326,7 @@ public abstract class AbstractErrorEntry
      * @return True if philosophically two error values represent the same kind of input mistake made by the operator. False otherwise.
      */
     @Override
+    //TODO(canavan) This is slow when the list of errors is very large. O(n^2) or close to it unfortunately. Unique error IDs would be awesome or a hash table.
     public boolean equals(Object obj)
     {
         if (!(obj instanceof AbstractErrorEntry)) // null check not necessary, instanceof returns false if obj == null
@@ -360,22 +361,6 @@ public abstract class AbstractErrorEntry
             return false;
 
         return true;
-    }
-
-    /**
-     * If you override equals() you have to override hashCode() with the same variables used for comparing.
-     * @return The computed hash code that should match in ALL cases where a.equals(b)
-     */
-    @Override
-    public int hashCode() {
-        // don't forget to download the lib for this and fix the project setup:
-        // http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/builder/HashCodeBuilder.html
-        return new org.apache.commons.lang3.builder.HashCodeBuilder(17, 37).
-                append(this.getErrorColumnNumber()).
-                append(this.errorLevel).
-                append(this.expectedValue).
-                append(this.errorMessage).
-                toHashCode();
     }
 
     /**
