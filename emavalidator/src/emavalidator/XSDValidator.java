@@ -29,14 +29,10 @@ public class XSDValidator
             // Associate the schema factory with the resource resolver, which is responsible for resolving the imported XSD's
             factory.setResourceResolver(new ResourceResolver());
             
-            // Array of schema sources.
-//            Source[] schemaSources = new Source[] {
-//                                        new StreamSource(new File("third_party/ema_xsd_template/xmldsig-core-schema.xsd")),
-//                                        new StreamSource(new File("third_party/ema_xsd_template/avails-v2.0.xsd"))
-//                                     };
+            String fullFilePath = "emavalidator/resources/ema_xsd_template/" + xsdFilePath;
+
             Source[] schemaSources = new Source[] {
-              new StreamSource(this.getClass().getClassLoader().getResourceAsStream(xsdFilePath)),
-//              new StreamSource(this.getClass().getClassLoader().getResourceAsStream("third_party/ema_xsd_template/xmldsig-core-schema.xsd")),
+              new StreamSource(this.getClass().getClassLoader().getResourceAsStream(fullFilePath)),
             };
 
             // Create the schema using the XSD Schema source.

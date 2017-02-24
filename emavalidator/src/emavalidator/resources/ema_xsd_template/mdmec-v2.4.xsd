@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2014 rel. 2 (x64) (http://www.altova.com) by Craig Seidel (private) -->
-<xs:schema xmlns:mdmec="http://www.movielabs.com/schema/mdmec/v2.3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:md="http://www.movielabs.com/schema/md/v2.3/md" targetNamespace="http://www.movielabs.com/schema/mdmec/v2.3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
-	<xs:import namespace="http://www.movielabs.com/schema/md/v2.3/md" schemaLocation="http://www.movielabs.com/schema/md/v2.3/md-v2.3.xsd"/>
+<xs:schema xmlns:mdmec="http://www.movielabs.com/schema/mdmec/v2.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:md="http://www.movielabs.com/schema/md/v2.4/md" targetNamespace="http://www.movielabs.com/schema/mdmec/v2.4" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.4">
+	<xs:import namespace="http://www.movielabs.com/schema/md/v2.4/md" schemaLocation="md-v2.4.xsd"/>
 	<!--Media Entertainment Core (MEC) METADATA-->
-	<!--Verson 2.3-->
+	<!--Verson 2.4-->
 	<xs:complexType name="BasicMetadata-type">
 		<xs:complexContent>
 			<xs:extension base="md:BasicMetadata-type"/>
@@ -18,7 +18,7 @@
 		<xs:complexContent>
 			<xs:extension base="md:OrgName-type">
 				<xs:sequence>
-					<xs:element name="ContactInfo" type="md:ContactInfo-type"/>
+					<xs:element name="ContactInfo" type="md:ContactInfo-type" minOccurs="0"/>
 				</xs:sequence>
 				<xs:attribute name="retailerSpecificID" type="xs:string"/>
 			</xs:extension>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2015 sp1 (x64) (http://www.altova.com) by Craig Seidel (private) -->
-<xs:schema xmlns:md="http://www.movielabs.com/schema/md/v2.3/md" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.movielabs.com/schema/md/v2.3/md" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.3">
+<xs:schema xmlns:md="http://www.movielabs.com/schema/md/v2.4/md" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.movielabs.com/schema/md/v2.3/md" targetNamespace="http://www.movielabs.com/schema/md/v2.4/md" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.4">
 	<!--Common Metadata-->
-	<!--Verson 2.3 - February 9, 2015-->
+	<!--Verson 2.4-->
 	<!-- *** Metadata References ***-->
 	<xs:simpleType name="id-type">
 		<xs:restriction base="xs:anyURI"/>
@@ -290,6 +290,7 @@
 			<xs:element name="Type" type="md:string-Cardset-Type" maxOccurs="unbounded"/>
 			<xs:element name="Description" type="xs:string" minOccurs="0"/>
 			<xs:element name="Sequence" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="Language" type="md:language-redefine" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="DigitalAssetCardsetList-type">
@@ -452,13 +453,14 @@
 			<xs:element name="Description" type="xs:string" minOccurs="0"/>
 			<xs:element name="Type" type="md:string-Video-Type" minOccurs="0"/>
 			<xs:element name="Encoding" type="md:DigitalAssetVideoEncoding-type" minOccurs="0"/>
-			<xs:element name="Picture" type="md:DigitalAssetVideoPicture-type"/>
+			<xs:element name="Picture" type="md:DigitalAssetVideoPicture-type" minOccurs="0"/>
 			<xs:element name="ColorType" type="md:ColorType-type" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>BW, Color, Colorized, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PictureFormat" type="md:string-Video-PictureFormat" minOccurs="0"/>
+			<xs:element name="Language" type="md:language-redefine" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="SubtitleLanguage" type="md:DigitalAssetVideoSubtitleLanguage-type" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="SignedLanguage" type="md:language-redefine" minOccurs="0"/>
 			<xs:element name="CardsetList" type="md:DigitalAssetCardsetList-type" minOccurs="0" maxOccurs="unbounded"/>
@@ -472,7 +474,7 @@
 			<xs:element name="Width" type="xs:int"/>
 			<xs:element name="Height" type="xs:int"/>
 			<xs:element name="Encoding" type="md:string-Image-Encoding"/>
-			<xs:element name="Language" type="md:language-redefine" minOccurs="0"/>
+			<xs:element name="Language" type="md:language-redefine" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="TrackReference" type="md:string-TrackReference" minOccurs="0"/>
 			<xs:element name="TrackIdentifier" type="md:ContentIdentifier-type" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Private" type="md:PrivateData-type" minOccurs="0"/>
@@ -533,7 +535,7 @@
 	<xs:complexType name="DigitalAssetAncillaryData-type">
 		<xs:sequence>
 			<xs:element name="Type" type="md:string-Anc-Type"/>
-			<xs:element name="SubType" type="md:string-Anc-SubType" minOccurs="0"/>
+			<xs:element name="SubType" type="md:string-Anc-SubType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="BaseTrackID" type="md:id-type" minOccurs="0"/>
 			<xs:element name="BaseTrackReference" type="md:string-TrackReference" minOccurs="0"/>
 			<xs:element name="BaseTrackIdentifier" type="md:ContentIdentifier-type" minOccurs="0" maxOccurs="unbounded"/>
