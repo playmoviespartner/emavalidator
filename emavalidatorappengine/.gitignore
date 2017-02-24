@@ -44,6 +44,8 @@ war/emavalidatorappengine/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+war/WEB-INF/META-INF/
+war/WEB-INF/com/
 
 #compilation logs
 .gwt/
