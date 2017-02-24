@@ -157,8 +157,8 @@ public final class ErrorLog
 
         for(SheetErrorSummary currentSheetErrorSummary : sheetErrorSummaries)
         {
-            ArrayList<AbstractErrorEntry> currentErrorList = currentSheetErrorSummary.getErrorLog();
-            ArrayList<AbstractNotificationEntry> currentNotificationsList = currentSheetErrorSummary.getNotificationsLog();
+            HashMap<AbstractErrorEntry, AbstractErrorEntry> currentErrorList = currentSheetErrorSummary.getErrorLog();
+            HashMap<AbstractNotificationEntry, AbstractNotificationEntry> currentNotificationsList = currentSheetErrorSummary.getNotificationsLog();
 
             formattedErrorLog.append(System.lineSeparator()).append(currentSheetErrorSummary.getSheetPrintString()).append(System.lineSeparator());
 
@@ -166,13 +166,13 @@ public final class ErrorLog
                 formattedErrorLog.append(ErrorLog.getCSVFormattedColumnHeaders()).append(System.lineSeparator());
 
             // Append Notifications to print Notifications Log
-            for(AbstractNotificationEntry currentNotificationEntry : currentNotificationsList)
+            for(AbstractNotificationEntry currentNotificationEntry : currentNotificationsList.keySet())
                 formattedErrorLog.append(currentNotificationEntry.toString(ErrorLog.outputLogType, currentSheetErrorSummary.getValidatingEMASpec())).append(System.lineSeparator());
             
             formattedErrorLog.append(System.lineSeparator());
             
             // Append Errors to print Error Log
-            for(AbstractErrorEntry currentErrorEntry : currentErrorList)
+            for(AbstractErrorEntry currentErrorEntry : currentErrorList.keySet())
                 formattedErrorLog.append(currentErrorEntry.toString(ErrorLog.outputLogType, currentSheetErrorSummary.getValidatingEMASpec())).append(System.lineSeparator());
         }
         return formattedErrorLog.toString();

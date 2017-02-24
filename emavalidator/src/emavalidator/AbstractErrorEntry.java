@@ -506,12 +506,21 @@ public abstract class AbstractErrorEntry
     }
 
     /**
-     * Assimilate the error values and error locations of the given error into this error instance. This is used to aggregate similar errors and keep the log short, succint, and neat.
+     * Assimilate the error values and error locations of the given error into this error instance. This is used to aggregate similar errors and keep the log short, succinct, and neat.
      * @param newError The new error that just occurred which should be assimilated by this ErrorEntry instance instead of being its own unique error
      */
     public void assimilateError(AbstractErrorEntry newError)
     {
-        this.errorLocations.addAll(newError.getErrorLocations());
-        this.errorValues   .addAll(newError.getErrorValues()); // add all the values that this not-new error encountered
+        this.errorLocations.addAll(newError.getErrorLocations()); // add all the error locations from the new error to this error
+        this.errorValues   .addAll(newError.getErrorValues()); // add all the error values from the new error to this error
+    }
+    
+    /**
+     * Returns the maximum of the number of error locations vs. the number of error values which should indicate the total number of errors of this type that have occurred.
+     * @return The number of times this specific error has occurred.
+     */
+    public int getErrorCount() 
+    {
+        return Math.max(this.errorLocations.size(), this.errorValues.size());
     }
 }

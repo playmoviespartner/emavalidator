@@ -17,6 +17,8 @@ package emavalidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import emavalidator.AbstractErrorEntry.ErrorLevel;
 
@@ -50,12 +52,12 @@ public class SheetErrorSummary
     /**
      * A list of ErrorEntrys. Should contain all the errors encountered during validation for this specific input sheet
      */
-    private ArrayList<AbstractErrorEntry> errorLog = new ArrayList<AbstractErrorEntry>();
+    private HashMap<AbstractErrorEntry, AbstractErrorEntry> errorLog = new LinkedHashMap<AbstractErrorEntry, AbstractErrorEntry>();
     
     /**
      * A list of NotificationEntrys. Should contain all the notifications encountered during validation for this specific input sheet
      */
-    private ArrayList<AbstractNotificationEntry> notificationsLog = new ArrayList<AbstractNotificationEntry>();
+    private HashMap<AbstractNotificationEntry, AbstractNotificationEntry> notificationsLog = new LinkedHashMap<AbstractNotificationEntry, AbstractNotificationEntry>();
 
     /**
      * A mapping of the number of times a specific error severity level has occurred to the number of times it has occurred
@@ -85,33 +87,45 @@ public class SheetErrorSummary
     }
 
     /**
-     * Append a new error into the internal error log. Additionally, increment the counter for that error type
-     * If the error already exists in the log, this error's location is appended to the existing error rather than appending
+     * Append a new error into the internal error log. Additionally, increment the counter for that error type.
+     * If the error already exists in the log, this error's location is appended to the existing error rather than append
+     * a brand new error entry into the log. This helps prevent duplicates.
      * @param newError The new error to add to the error log if it's new, or append to an existing error entry if it isn't
      */
     public void appendError(AbstractErrorEntry newError)
     {
-        if(this.errorLog.contains(newError)) // if this sheet error summary instance already contains this exact error
+        // if this sheet error summary instance already contains this exact error
+        if (this.errorLog.containsKey(newError))
         {
-            AbstractErrorEntry repeatedError = this.errorLog.get(this.errorLog.indexOf(newError));
-            repeatedError.assimilateError(newError);
+            AbstractErrorEntry currentError = this.errorLog.get(newError); // retrieve the error that currently exists in the system
+            currentError.assimilateError(newError); // save all the new error data in the current one
+            this.errorLog.put(currentError, currentError); // save the updated current error back into the map
+            this.errorCounts.put(newError.getErrorLevel(), errorCounts.get(newError.getErrorLevel()) + 1); // increment the error type counter            
         }
-        else // if this sheet error summary instance does not already contain this exact error
-            this.errorLog.add(newError); // store the incoming error entry in the error log
-        this.errorCounts.put(newError.getErrorLevel(), errorCounts.get(newError.getErrorLevel()) + 1); // increment the error type counter
+        else // else, the error doesn't exist and must be inserted into the map
+        {
+            this.errorLog.put(newError, newError); // initialize the first value in the map
+            this.errorCounts.put(newError.getErrorLevel(), 1); // initialize the first error count for this specific error type
+        }
     }
-    
+
+    /**
+     * Append a new notification into the internal notification log. If the notification already exists in the log, this notification's
+     * location is appended to the existing notification rather than append a brand new notification entry into the log. This helps prevent duplicates.
+     * @param newNotification The new notification to add to the notification log if it's new, or append to an existing notification if it isn't
+     */
     public void appendNotification(AbstractNotificationEntry newNotification)
     {
         // if this sheet error summary instance already contains this exact notification
-        if(this.notificationsLog.contains(newNotification)) 
+        if (this.notificationsLog.containsKey(newNotification))
         {
-            AbstractNotificationEntry repeatedNotification = this.notificationsLog.get(this.notificationsLog.indexOf(newNotification));
-            repeatedNotification.assimilateNotification(newNotification);
+            AbstractNotificationEntry currentNotification = this.notificationsLog.get(newNotification); // retrieve the notification that currently exists in the system
+            currentNotification.assimilateNotification(newNotification); // save all the new notification data in the current one
+            this.notificationsLog.put(currentNotification, currentNotification); // save the updated current notification back into the map
         }
-        else 
+        else // else, the notification doesn't exist and must be inserted into the map
         {
-            this.notificationsLog.add(newNotification);
+            this.notificationsLog.put(newNotification, newNotification);
         }
         //this.notificationCount.put();
     }
@@ -121,7 +135,7 @@ public class SheetErrorSummary
      */
     public void printSheetErrorSummary()
     {
-        for(AbstractErrorEntry currentError : this.errorLog)
+        for(AbstractErrorEntry currentError : this.errorLog.keySet())
             System.out.println(currentError.toLogString(this.validatingSpec));
     }
 
@@ -161,8 +175,9 @@ public class SheetErrorSummary
     public int getErrorCount()
     {
         int totalErrorCount = 0;
-        for(AbstractErrorEntry currentErrorEntry : this.errorLog) {
-            totalErrorCount += currentErrorEntry.getErrorLocations().size();
+        for (Entry<AbstractErrorEntry, AbstractErrorEntry> entry: errorLog.entrySet())
+        {
+            totalErrorCount += entry.getValue().getErrorCount();
         }
         return totalErrorCount;
     }
@@ -172,20 +187,23 @@ public class SheetErrorSummary
      */
     public int getErrorColumnsCount()
     {
-        int totalErrorColumnsCount = 0;
-        totalErrorColumnsCount = this.errorLog.size();
-        return totalErrorColumnsCount;
+        int totalNotificationCount = 0;
+        for (Entry<AbstractNotificationEntry, AbstractNotificationEntry> entry: notificationsLog.entrySet())
+        {
+            totalNotificationCount += entry.getValue().getNotificationCount();
+        }
+        return totalNotificationCount;
     }
     
     /**
      * @return This SheetErrorSummary's internal error log. Refer to the ErrorLog class for full documentation.
      */
-    public ArrayList<AbstractErrorEntry> getErrorLog() { return errorLog; }
+    public HashMap<AbstractErrorEntry, AbstractErrorEntry> getErrorLog() { return errorLog; }
 
     /**
      * @return This SheetErrorSummary's internal error log. Refer to the ErrorLog class for full documentation.
      */
-    public ArrayList<AbstractNotificationEntry> getNotificationsLog() { return notificationsLog; }
+    public HashMap<AbstractNotificationEntry, AbstractNotificationEntry> getNotificationsLog() { return notificationsLog; }
     
     /**
      * Format this SheetErrorSummary's name, index, EMA version, and error count into a formatted string for error log output

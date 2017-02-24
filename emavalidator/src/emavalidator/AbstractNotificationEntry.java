@@ -335,4 +335,13 @@ public abstract class AbstractNotificationEntry
         this.notificationLocations.addAll(newNotification.getNotificationLocations());
         this.notificationValues   .addAll(newNotification.getNotificationValues()); // add all the values that this not-new error encountered
     }
+    
+    /**
+     * Returns the maximum of the number of notification locations vs. the number of notification values which should indicate the total number of notification of this type that have occurred.
+     * @return The number of times this specific notification has occurred.
+     */
+    public int getNotificationCount()
+    {
+        return Math.max(this.notificationLocations.size(), this.notificationValues.size());
+    }
 }
