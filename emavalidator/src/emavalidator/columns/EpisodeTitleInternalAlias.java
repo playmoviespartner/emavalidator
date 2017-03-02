@@ -29,5 +29,8 @@ public class EpisodeTitleInternalAlias extends AbstractColumnDefinition
                 ValidatorUtils.ILLEGAL_METADATA_CHARACTERS,
                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS,
                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS_EXPECTED));
+        
+        // We allow EpisodeTitleInternalAlias to be blank if the WorkType is Season Type.
+        // This check is done in the RowValidatorEpisodeTitleRequired validation.
     }
 }

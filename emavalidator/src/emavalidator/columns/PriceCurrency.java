@@ -21,16 +21,19 @@ import emavalidator.errors.CellErrorSpecificValueFormat;
 import emavalidator.validators.CellValidatorRegexFormat;
 import emavalidator.validators.ValidatorUtils;
 
-public class SeasonContentID extends AbstractColumnDefinition
+public class PriceCurrency extends AbstractColumnDefinition
 {
+    public static final String EXPECTED_ERROR_ISO4217 = "Please follow the ISO-4217 Currency Alphabetic Code Standard, or leave blank.";
+    
     @Override
     public void buildValidators()
     {
-        this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
-                            false,
-                            ErrorLevel.ERROR,
-                            CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,
-                            ValidatorUtils.EXPECTED_EIDR_1_7_VALUES));
+        this.validators.add(new CellValidatorRegexFormat(new String[] {
+                ValidatorUtils.PRICE_CURRENCY_VALUES_REGEX,
+                ValidatorUtils.EMPTY_STRING_REGEX},
+                false,
+                ErrorLevel.ERROR,
+                CellErrorSpecificValueFormat.STANDARDIZED_VALUES_ONLY_ERROR,
+                PriceCurrency.EXPECTED_ERROR_ISO4217));
     }
 }

@@ -22,8 +22,17 @@ public class RowErrorEIDRValueCheck extends AbstractErrorEntry
     public static final String ERROR_NO_EIDR_OR_ID = "A unique asset cannot be identified without either its unique EIDR-2 value or a generated unique ID.";
     public static final String EXPECTED_EIDR_OR_ID = "Please provide the asset's EIDR-2 value (e.g. 10.5240/1489-49A2-3956-4B2D-ZZ44-7) or generate a unique ID for it (e.g. X5123D8G).";
 
-    public RowErrorEIDRValueCheck(int rowNumber, String actualValue)
+    public static final String ERROR_NO_EIDR = "A unique asset cannot be identified without its unique EIDR value.";
+    public static final String EXPECTED_EIDR = "Please provide the asset's EIDR value (e.g. urn:eidr:10.5240:1489-49A2-3956-4B2D-ZZ44-7).";
+
+    public static final String ERROR_CANNOT_BE_BLANK = "This cell cannot be blank for the specified WorkType.";
+    public static final String ERROR_EPISODE_CONTENT_ID_CANNOT_HAVE_VALUE = "EpisodeContentID cannot contain a value for the specified WorkType.";
+    public static final String ERROR_EPISODE_ID_CANNOT_HAVE_VALUE = "EpisodeID cannot contain a value for the specified WorkType.";
+
+    public static final String EXPECTED_BLANK = "";
+    
+    public RowErrorEIDRValueCheck(int rowNumber, String errorMessage, String actualValue, String expectedValue)
     {
-        super(rowNumber, RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID, ErrorLevel.ERROR, actualValue, RowErrorEIDRValueCheck.EXPECTED_EIDR_OR_ID);
+        super(rowNumber, errorMessage, ErrorLevel.ERROR, actualValue, expectedValue);
     }
 }

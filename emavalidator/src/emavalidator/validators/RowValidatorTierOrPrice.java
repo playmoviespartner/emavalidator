@@ -81,6 +81,7 @@ public class RowValidatorTierOrPrice extends AbstractRowValidator
         else if(this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec15 ||
                 this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16 ||
                 this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV ||
+                this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17 ||
                 this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17TV)
         {
             try
@@ -131,8 +132,7 @@ public class RowValidatorTierOrPrice extends AbstractRowValidator
                         return false;
                     }
                 }
-                else if(priceType.compareTo(PriceType.PriceTypeValues.SRP.toLowerString()) == 0 ||
-                        priceType.compareTo(PriceType.PriceTypeValues.WSP.toLowerString()) == 0)
+                else if(priceType.compareTo(PriceType.PriceTypeValues.WSP.toLowerString()) == 0)
                 {
                     if(!priceValue.matches(ValidatorUtils.FLOAT_FORMAT_REGEX))
                     {

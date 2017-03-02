@@ -17,20 +17,26 @@ package emavalidator.columns;
 
 import emavalidator.AbstractColumnDefinition;
 import emavalidator.AbstractErrorEntry.ErrorLevel;
+import emavalidator.errors.CellErrorSpecialSymbols;
 import emavalidator.errors.CellErrorSpecificValueFormat;
 import emavalidator.validators.CellValidatorRegexFormat;
+import emavalidator.validators.CellValidatorSpecialSymbols;
 import emavalidator.validators.ValidatorUtils;
 
-public class SeasonContentID extends AbstractColumnDefinition
+public class EpisodeID extends AbstractColumnDefinition
 {
     @Override
     public void buildValidators()
     {
-        this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
+        this.validators.add(new CellValidatorSpecialSymbols(
+                            ValidatorUtils.ILLEGAL_METADATA_CHARACTERS,
+                            CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS,
+                            CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS_EXPECTED));
+        this.validators.add(new CellValidatorRegexFormat(
+                            new String[]{ ValidatorUtils.VALID_GENERIC_ID_REGEX },
                             false,
                             ErrorLevel.ERROR,
-                            CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,
-                            ValidatorUtils.EXPECTED_EIDR_1_7_VALUES));
+                            CellErrorSpecificValueFormat.GENERIC_ID_FORMAT_ERROR,
+                            CellErrorSpecificValueFormat.EXPECTED_VALUES_GENERIC_ID));
     }
 }

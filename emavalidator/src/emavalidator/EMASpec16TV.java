@@ -83,7 +83,7 @@ import emavalidator.validators.RowValidatorDuplicateEpisodeNumber;
 import emavalidator.validators.RowValidatorEntryType;
 import emavalidator.validators.RowValidatorEpisodeNumber;
 import emavalidator.validators.RowValidatorQuestionableStart;
-import emavalidator.validators.RowValidatorSeasonEIDRs;
+import emavalidator.validators.RowValidatorEIDRs;
 import emavalidator.validators.RowValidatorStartLessEnd;
 import emavalidator.validators.RowValidatorSuppressionPreorder;
 import emavalidator.validators.RowValidatorTierOrPrice;
@@ -92,7 +92,7 @@ import emavalidator.validators.RowValidatorTierOrPrice;
  * A concrete representation of EMASpec which can validate an input set of data against the entire EMA 1.6 TV spec
  * Represents all the rules that data stored in the EMA 1.6 TV template should follow based on the individual column
  * it's stored in and any other columns that that column references.
- * @author canavan
+ * @author ckha
  */
 public class EMASpec16TV extends AbstractEMASpec
 {
@@ -105,7 +105,26 @@ public class EMASpec16TV extends AbstractEMASpec
      * The columns that exist only in the 1.6 TV spec. Used to try to decide which version the user has input.
      * Currently: "SeriesTitleInternalAlias", "SeriesTitleDisplayUnlimited", "SeasonNumber", "EpisodeNumber", "EpisodeTitleInternalAlias", "EpisodeTitleDisplayUnlimited", "SeasonTitleInternalAlias", "SeasonTitleDisplayUnlimited", "EpisodeCount", "SeasonCount", "SeriesAltID", "SeasonAltID", "EpisodeAltID", "CompanyDisplayCredit", "SeriesContentID", "SeasonContentID", "EpisodeContentID", "EpisodeProductID", "FixedEndDate"
      */
-    public static final ArrayList<String> UNIQUE_COLUMN_HEADER_VALUES = new ArrayList<String>(Arrays.asList("SeriesTitleInternalAlias", "SeriesTitleDisplayUnlimited", "SeasonNumber", "EpisodeNumber", "EpisodeTitleInternalAlias", "EpisodeTitleDisplayUnlimited", "SeasonTitleInternalAlias", "SeasonTitleDisplayUnlimited", "EpisodeCount", "SeasonCount", "SeriesAltID", "SeasonAltID", "EpisodeAltID", "CompanyDisplayCredit", "SeriesContentID", "SeasonContentID", "EpisodeContentID", "EpisodeProductID", "FixedEndDate"));
+    public static final ArrayList<String> UNIQUE_COLUMN_HEADER_VALUES = 
+            new ArrayList<String>(Arrays.asList("SeriesTitleInternalAlias",
+                                                "SeriesTitleDisplayUnlimited",
+                                                "SeasonNumber",
+                                                "EpisodeNumber",
+                                                "EpisodeTitleInternalAlias",
+                                                "EpisodeTitleDisplayUnlimited",
+                                                "SeasonTitleInternalAlias",
+                                                "SeasonTitleDisplayUnlimited",
+                                                "EpisodeCount",
+                                                "SeasonCount",
+                                                "SeriesAltID",
+                                                "SeasonAltID",
+                                                "EpisodeAltID",
+                                                "CompanyDisplayCredit",
+                                                "SeriesContentID",
+                                                "SeasonContentID",
+                                                "EpisodeContentID",
+                                                "EpisodeProductID",
+                                                "FixedEndDate"));
 
     @Override
     protected void buildColumnSpec()
@@ -190,7 +209,7 @@ public class EMASpec16TV extends AbstractEMASpec
         this.rowSpec.addValidator(new RowValidatorCaptionExemption(AbstractEMASpec.EMAVersion.EMASpec16TV));
         this.rowSpec.addValidator(new RowValidatorSuppressionPreorder());
 //      this.rowSpec.addValidator(new RowValidatorMandatoryRating()); removed because of a feature request. caused too much work for us and partners.
-        this.rowSpec.addValidator(new RowValidatorSeasonEIDRs(AbstractEMASpec.EMAVersion.EMASpec16TV));
+        this.rowSpec.addValidator(new RowValidatorEIDRs(AbstractEMASpec.EMAVersion.EMASpec16TV));
         this.rowSpec.addValidator(new RowValidatorEpisodeNumber());
         this.rowSpec.addValidator(new RowValidatorQuestionableStart());
         this.rowSpec.addValidator(new RowValidatorEntryType(AbstractEMASpec.EMAVersion.EMASpec16TV));

@@ -23,11 +23,11 @@ import emavalidator.validators.ValidatorUtils;
 
 public class AvailID extends AbstractColumnDefinition
 {
-
     /**
      * @param required Whether the field is required or not
      */
     public AvailID(boolean required) { super(required); }
+    
     @Override
     public void buildValidators()
     {

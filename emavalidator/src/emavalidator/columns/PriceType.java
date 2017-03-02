@@ -25,7 +25,7 @@ public class PriceType extends AbstractColumnDefinition
 {
     public static enum PriceTypeValues
     {
-        Tier, WSP, SRP, Category;
+        Tier, WSP, Category, DMRP, SMRP, LicenseFee, SeasonOnly;
 
         /**
          * @return this.toString().toLowerCase()

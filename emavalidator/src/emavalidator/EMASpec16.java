@@ -25,7 +25,7 @@ import emavalidator.validators.*;
  * A concrete representation of EMASpec which can validate an input set of data against the entire EMA 1.6 spec
  * Represents all the rules that data stored in the EMA 1.6 template should follow based on the individual column
  * it's stored in and any other columns that that column references.
- * @author canavan
+ * @author ckha
  */
 public class EMASpec16 extends AbstractEMASpec
 {
@@ -37,7 +37,14 @@ public class EMASpec16 extends AbstractEMASpec
     /**
      * The columns that exist only in the 1.6 spec. Used to try to decide which version the user has input.
      */
-    public static final ArrayList<String> UNIQUE_COLUMN_HEADER_VALUES = new ArrayList<String>(Arrays.asList("LocalizationType", "SuppressionLiftDate", "SpecialPreOrderFulfillDate", "RatingReason", "CaptionExemption", "HoldbackLanguage", "HoldbackExclusionLanguage"));
+    public static final ArrayList<String> UNIQUE_COLUMN_HEADER_VALUES = 
+            new ArrayList<String>(Arrays.asList("LocalizationType",
+                                                "SuppressionLiftDate",
+                                                "SpecialPreOrderFulfillDate",
+                                                "RatingReason",
+                                                "CaptionExemption",
+                                                "HoldbackLanguage",
+                                                "HoldbackExclusionLanguage"));
 
     @Override
     protected void buildColumnSpec()    {

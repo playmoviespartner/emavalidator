@@ -38,7 +38,10 @@ public class RowValidatorAltOrProductID extends AbstractRowValidator
             String altId = rowValues.get(AltID.class.getSimpleName());
             
             if (productId.isEmpty() && altId.isEmpty()) {
-                ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber, "ProductID and AltID are empty."));
+                ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber, 
+                                                                RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID,
+                                                                "ProductID and AltID are empty.",
+                                                                RowErrorEIDRValueCheck.EXPECTED_EIDR_OR_ID));
             }
         
         } catch (NullPointerException NPE) {

@@ -33,8 +33,10 @@ public class LicenseType extends AbstractColumnDefinition
         String valuesRegex = "";
         String valuesAccepted = "";
 
-        if(this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16 ||
-                this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV)
+        if( this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17 ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17TV ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16 ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV)
         {
             valuesRegex = ValidatorUtils.LICENSE_TYPE_VALUES_REGEX_16;
             valuesAccepted = CellErrorLicenseType.VALUES_ACCEPTED_16;

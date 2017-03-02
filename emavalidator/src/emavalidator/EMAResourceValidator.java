@@ -560,6 +560,8 @@ public final class EMAResourceValidator
         // See if we have the exact number of columns that we expect
         if(columnHeaderDefinitions.size() == EMASpec17TV.NUM_COLUMNS)
             return EMAVersion.EMASpec17TV;
+        else if(columnHeaderDefinitions.size() == EMASpec17.NUM_COLUMNS)
+            return EMAVersion.EMASpec17;
         else if(columnHeaderDefinitions.size() == EMASpec16TV.NUM_COLUMNS)
             return EMAVersion.EMASpec16TV;
         else if(columnHeaderDefinitions.size() == EMASpec16.NUM_COLUMNS)
@@ -571,18 +573,18 @@ public final class EMAResourceValidator
         System.out.println("Unexact number of column headers hit. Attempting to deduce by unique column names");
 
         // check for unique column names to help deduce if column numbering is off
-        for(String currentUniqueHeaderDefinition : EMASpec14.UNIQUE_COLUMN_HEADER_VALUES)
+        for(String currentUniqueHeaderDefinition : EMASpec17TV.UNIQUE_COLUMN_HEADER_VALUES)
         {
             if(columnHeaderDefinitions.contains(currentUniqueHeaderDefinition))
-                return EMAVersion.EMASpec14;
+                return EMAVersion.EMASpec17TV;
         }
-
-        for(String currentUniqueHeaderDefinition : EMASpec15.UNIQUE_COLUMN_HEADER_VALUES)
+        
+        for(String currentUniqueHeaderDefinition : EMASpec17.UNIQUE_COLUMN_HEADER_VALUES)
         {
             if(columnHeaderDefinitions.contains(currentUniqueHeaderDefinition))
-                return EMAVersion.EMASpec15;
+                return EMAVersion.EMASpec17;
         }
-
+        
         for(String currentUniqueHeaderDefinition : EMASpec16TV.UNIQUE_COLUMN_HEADER_VALUES)
         {
             if(columnHeaderDefinitions.contains(currentUniqueHeaderDefinition))
@@ -595,12 +597,18 @@ public final class EMAResourceValidator
                 return EMAVersion.EMASpec16;
         }
         
-        for(String currentUniqueHeaderDefinition : EMASpec17TV.UNIQUE_COLUMN_HEADER_VALUES)
+        for(String currentUniqueHeaderDefinition : EMASpec15.UNIQUE_COLUMN_HEADER_VALUES)
         {
             if(columnHeaderDefinitions.contains(currentUniqueHeaderDefinition))
-                return EMAVersion.EMASpec17TV;
+                return EMAVersion.EMASpec15;
         }
-
+        
+        for(String currentUniqueHeaderDefinition : EMASpec14.UNIQUE_COLUMN_HEADER_VALUES)
+        {
+            if(columnHeaderDefinitions.contains(currentUniqueHeaderDefinition))
+                return EMAVersion.EMASpec14;
+        }
+        
         System.out.println("No unique column names found. Using best guess for range of column sizes");
 
         // as a last resort, check a range of column numbers hoping that they haven't added any

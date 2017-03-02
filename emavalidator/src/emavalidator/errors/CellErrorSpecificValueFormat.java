@@ -33,8 +33,12 @@ public class CellErrorSpecificValueFormat extends AbstractErrorEntry
     public static final String FLOAT_FORMAT_ERROR                = "Invalid cell value: The value for this cell must be a floating point number value.";
     public static final String DECIMAL_FORMAT_ERROR              = "Invalid cell value: The value for this cell must be a decimal number value.";
     public static final String COMMA_SEPARATED_VALUES_ERROR      = "Invalid cell value: The value for this cell must be a comma separated list of values.";
+    public static final String STANDARDIZED_VALUES_ONLY_ERROR    = "Invalid cell value: The value for this cell is standardized.";
+    public static final String ANY_NON_BLANK_STRING_ERROR        = "Invalid cell value: The value for this cell must be a string and cannot be blank.";
+    
     // This check is too strict
     public static final String ALT_ID_FORMAT_ERROR               = "Invalid cell value: The value for this cell may only contain alphanumeric characters (and some special characters).";
+    public static final String GENERIC_ID_FORMAT_ERROR           = "Invalid cell value: The value for this cell may only contain alphanumeric characters (and some special characters).";
 
     public static final String EXPECTED_VALUES_NUMBER  = "This column expects whole numbers only (e.g. 1, 24, 1410). Optional columns may also be left blank.";
     public static final String EXPECTED_VALUES_FLOAT   = "This column expects float numbers only (e.g. .23, 0.35, 3.21). Optional columns may also be left blank.";
@@ -42,7 +46,9 @@ public class CellErrorSpecificValueFormat extends AbstractErrorEntry
     public static final String EXPECTED_VALUES_SUBDUB  = "This column expects sub / dub values only (e.g. sub, dub, subdub, any). Optional columns may also be left blank.";
     public static final String EXPECTED_VALUES_YESNO   = "This column expects yes / no values only (e.g. Yes, yes, YES, No, no, NO).";
     public static final String EXPECTED_VALUES_ALT_ID  = "This column expects alphanumeric characters, hyphens (-), underscores (_), periods (.), arrobas (@), or forward slashes (/).";
-
+    public static final String EXPECTED_VALUES_GENERIC_ID  = "This column expects alphanumeric characters, hyphens (-), underscores (_), periods (.), arrobas (@), or forward slashes (/).";
+    public static final String EXPECTED_VALUES_ANY_NON_BLANK_STRING = "This column expects any string of non-whitespace characters.";
+    
     public CellErrorSpecificValueFormat(int rowNumber, int columnNumber, String message, ErrorLevel errorLevel, String value, String expected)
     {
         super(rowNumber, columnNumber, message, errorLevel, value, expected);

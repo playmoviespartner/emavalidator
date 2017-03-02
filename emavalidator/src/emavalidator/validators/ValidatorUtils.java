@@ -30,6 +30,7 @@ public class ValidatorUtils
     {
         ValidatorUtils.CHRONOLOGICAL_DATE_FORMAT_VALIDATOR = new SimpleDateFormat("yyyy-MM-dd");
         ValidatorUtils.CHRONOLOGICAL_DATE_FORMAT_VALIDATOR.setLenient(false); // force non lenient date validation
+        ValidatorUtils.ISO8601_DATETIME_FORMAT_VALIDATOR = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
     }
     
     public static final int NUM_CHARACTERS_IN_ALPHABET = 26;
@@ -40,7 +41,17 @@ public class ValidatorUtils
      * Used to validate a chronological date format in YYYY-MM-DD format with respect to things like number of days in a month and leap years / days
      */
     public static SimpleDateFormat CHRONOLOGICAL_DATE_FORMAT_VALIDATOR;
+    
+    /**
+     * 
+     */
+    public static SimpleDateFormat ISO8601_DATETIME_FORMAT_VALIDATOR;
 
+    /**
+     * Regex to allow any String.
+     */
+    public static final String ANY_NON_BLANK_STRING_REGEX = "(\\S)+";
+    
     /**
      * 1, 2, 3, 4, 5, 6
      */
@@ -87,6 +98,13 @@ public class ValidatorUtils
     public static final String EIDR_FORMAT_REGEX = "([0-9]{2}\\.[0-9]{4}/)?[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2}";
 
     /**
+     * EMA Avails 1.7
+     * urn:eidr:10.5240:7791-8534-2C23-9030-8610-5
+     * urn:eidr:10.5240:1489-49A2-3956-4B2D-BEFK-6
+     */
+    public static final String EIDR_FORMAT_1_7_REGEX = "([\\w]{3}:[\\w]{4}:([0-9]{2}\\.[0-9]{4}:)[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2})|[\\w]+:[\\w]+:[-\\w]+:[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2}";
+    
+    /**
      * 1, 20, 450, 5810931
      */
     public static final String NUMBER_FORMAT_REGEX = "\\d+";
@@ -131,6 +149,7 @@ public class ValidatorUtils
      * Alphanumerics, -_.@/
      */
     public static final String VALID_ALTID_REGEX = "[a-zA-Z0-9-_.@/]*";
+    public static final String VALID_GENERIC_ID_REGEX = "[a-zA-Z0-9-_.@/:]*";
 
     /**
      * 1, 13, A, CBA, Tier 1, Tier1, Tier-1, TierB, Tier-B, T 1
@@ -168,13 +187,13 @@ public class ValidatorUtils
     /**
      * HD, SD, 3D, 3DHD, 3DSD, HFR, 3DHFR, 4K, 3D4K
      */
-    public static final String FORMAT_PROFILE_VALUES_REGEX = "(?i)^(HD|SD|3D|3DHD|3DSD|HFR|3DHFR|4K|3D4K)$";
+    public static final String FORMAT_PROFILE_VALUES_REGEX = "(?i)^(SD|HD|UHD|3D|3DSD|3DHD|3DUHD)$";
 
     /**
-     * New Release, Library, Mega-Library, DD-Theatrical, Pre-Theatrical, Early EST, Preorder EST, Early VOD, Preorder VOD, DTV, DD-DVD
+     * New Release, Library, Mega-Library, DD-Theatrical, Pre-Theatrical, Early EST, Preorder EST, Early VOD, Preorder VOD, DTV, DD-DVD, Next Day TV, POD
      * We do NOT want to accept catalog as a valid value
      */
-    public static final String LICENSE_RIGHTS_DESCRIPTION_VALUES_REGEX = "(?i)^(New ?Release|(Priority)?(-| )?Library|Mega(-| )?Library|DD(-| )?Theatrical|Pre(-| )?Theatrical|Early(-| )?EST|Preorder(-| )?EST|Early(-| )?VOD|Preorder(-| )?VOD|Next ?Day ?TV|Season ?Only|DTV|DD-DVD|Free|DO_NOT_SELL)$";
+    public static final String LICENSE_RIGHTS_DESCRIPTION_VALUES_REGEX = "(?i)^(New ?Release|(Priority)?(-| )?Library|Mega(-| )?Library|DD(-| )?Theatrical|Pre(-| )?Theatrical|Early(-| )?EST|Preorder(-| )?EST|Early(-| )?VOD|Preorder(-| )?VOD|Next ?Day ?TV|Season ?Only|DTV|DD-DVD|Free|POD|DO_NOT_SELL)$";
 
     /**
      * EST, VOD, SVOD
@@ -218,13 +237,40 @@ public class ValidatorUtils
 
     public static final String EXPECTED_EIDR_VALUES = "Examples: 10.5240/CB93-339B-33EA-F532-9428-X, 0F0D-F5BB-7583-3BB0-53D3-Q";
 
+    public static final String EXPECTED_EIDR_1_7_VALUES = "Examples: urn:eidr:10.5240:1489-49A2-3956-4B2D-BEFK-6";
+    
     public static final String EXPECTED_TWO_DIGIT_ISO_CODES = "CA, US, FR, GB, etc. (en-US, fr-CA, zh-Hans, also allowed).";
 
+    /**
+     * USD, CAD, JPY, EUR
+     */
+    public static final String PRICE_CURRENCY_VALUES_REGEX = "[A-Z]{3}";
+    
     /**
      * 32, 0:32, 12:32, 1:45
      */
     public static final String TIME_FORMAT_REGEX = "(\\d{1,}:)?\\d{2}:?\\d{2}";
 
+    /**
+     * True, False, DV, HDR10
+     */
+    public static final String HDR_VALUES_REGEX = "(?i)^(True|False|DV|HDR10)$";
+    
+    /**
+     * True, False
+     */
+    public static final String WCG_VALUES_REGEX = "(?i)^(True|False)$";
+    
+    /**
+     * True, False
+     */
+    public static final String HFR_VALUES_REGEX = "(?i)^(True|False)$";
+    
+    /**
+     * True, False, Atmos, DTS:X, Auro3D
+     */
+    public static final String NGAUDIO_VALUES_REGEX = "(?i)^(True|False|Atmos|DTS:X|Auro3D)$";
+    
     public static boolean equals(final String s1, final String s2)
     {
         return s1 != null && s2 != null && s1.hashCode() == s2.hashCode() && s1.equals(s2);
@@ -250,7 +296,14 @@ public class ValidatorUtils
 
         try
         {
-            ValidatorUtils.CHRONOLOGICAL_DATE_FORMAT_VALIDATOR.parse(inputString);
+            // Length greater than 10 means it may be in ISO-8601 format.
+            if (inputString.length() > 10) {
+                ValidatorUtils.ISO8601_DATETIME_FORMAT_VALIDATOR.parse(inputString);
+            }
+            // Otherwise, assume YYYY-mm-DD Date String.
+            else {
+                ValidatorUtils.CHRONOLOGICAL_DATE_FORMAT_VALIDATOR.parse(inputString);
+            }
             return true;
         }
         catch (ParseException e) { }

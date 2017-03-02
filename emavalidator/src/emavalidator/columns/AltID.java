@@ -36,18 +36,16 @@ public class AltID extends AbstractColumnDefinition
 
         if(required)
         {
-            String valuesRegex = ValidatorUtils.VALID_ALTID_REGEX;
             this.validators.add(new CellValidatorSpecialSymbols(
                                 ValidatorUtils.ILLEGAL_METADATA_CHARACTERS,
                                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS,
                                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS_EXPECTED));
             this.validators.add(new CellValidatorRegexFormat(new String[]{
-                                valuesRegex },
+                                ValidatorUtils.VALID_ALTID_REGEX },
                                 false,
                                 ErrorLevel.ERROR,
                                 CellErrorSpecificValueFormat.ALT_ID_FORMAT_ERROR,
                                 CellErrorSpecificValueFormat.EXPECTED_VALUES_ALT_ID));
-            //this.validators.add(new CellValidatorNotEmpty());
         }
         else
         {

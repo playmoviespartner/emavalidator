@@ -21,16 +21,18 @@ import emavalidator.errors.CellErrorSpecificValueFormat;
 import emavalidator.validators.CellValidatorRegexFormat;
 import emavalidator.validators.ValidatorUtils;
 
-public class SeasonContentID extends AbstractColumnDefinition
+public class AssetLanguage extends AbstractColumnDefinition
 {
     @Override
     public void buildValidators()
     {
         this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
-                            false,
-                            ErrorLevel.ERROR,
-                            CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,
-                            ValidatorUtils.EXPECTED_EIDR_1_7_VALUES));
-    }
+                ValidatorUtils.ISO_TWO_DIGIT_LETTER_CODE_REGEX,
+                ValidatorUtils.ISO_TWO_DIGIT_LETTER_CODE_PLUS_SCRIPT_REGEX,
+                ValidatorUtils.ISO_TWO_DIGIT_LETTER_CODE_PLUS_REGION_REGEX,
+                ValidatorUtils.EMPTY_STRING_REGEX},
+                false,
+                ErrorLevel.ERROR,
+                CellErrorSpecificValueFormat.ISO_TWO_DIGIT_LANGUAGE_CODE_ERROR,
+                ValidatorUtils.EXPECTED_TWO_DIGIT_ISO_CODES));    }
 }

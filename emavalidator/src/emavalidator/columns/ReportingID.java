@@ -16,21 +16,18 @@ limitations under the License.
 package emavalidator.columns;
 
 import emavalidator.AbstractColumnDefinition;
-import emavalidator.AbstractErrorEntry.ErrorLevel;
-import emavalidator.errors.CellErrorSpecificValueFormat;
-import emavalidator.validators.CellValidatorRegexFormat;
+import emavalidator.errors.CellErrorSpecialSymbols;
+import emavalidator.validators.CellValidatorSpecialSymbols;
 import emavalidator.validators.ValidatorUtils;
 
-public class SeasonContentID extends AbstractColumnDefinition
+public class ReportingID extends AbstractColumnDefinition
 {
     @Override
     public void buildValidators()
     {
-        this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
-                            false,
-                            ErrorLevel.ERROR,
-                            CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,
-                            ValidatorUtils.EXPECTED_EIDR_1_7_VALUES));
+        this.validators.add(new CellValidatorSpecialSymbols(
+                ValidatorUtils.ILLEGAL_METADATA_CHARACTERS,
+                CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS,
+                CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS_EXPECTED));
     }
 }

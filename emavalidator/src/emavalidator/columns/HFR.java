@@ -17,20 +17,22 @@ package emavalidator.columns;
 
 import emavalidator.AbstractColumnDefinition;
 import emavalidator.AbstractErrorEntry.ErrorLevel;
+import emavalidator.errors.CellErrorHFR;
 import emavalidator.errors.CellErrorSpecificValueFormat;
 import emavalidator.validators.CellValidatorRegexFormat;
 import emavalidator.validators.ValidatorUtils;
 
-public class SeasonContentID extends AbstractColumnDefinition
+public class HFR extends AbstractColumnDefinition
 {
     @Override
     public void buildValidators()
     {
         this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
-                            false,
-                            ErrorLevel.ERROR,
-                            CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,
-                            ValidatorUtils.EXPECTED_EIDR_1_7_VALUES));
+                ValidatorUtils.HFR_VALUES_REGEX,
+                ValidatorUtils.EMPTY_STRING_REGEX},
+                false,
+                ErrorLevel.ERROR,
+                CellErrorSpecificValueFormat.SPECIFIC_VALUES_ONLY_ERROR,
+                CellErrorHFR.EXPECTED_HFR_VALUES));
     }
 }

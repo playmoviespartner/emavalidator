@@ -44,9 +44,11 @@ public class EntryType extends AbstractColumnDefinition
         String valuesRegex = "";
         String valuesAccepted = "";
 
-        if(this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16 ||
-           this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV ||
-           this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec15)
+        if( this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17 ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17TV ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16 ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV ||
+            this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec15)
         {
             valuesRegex = ValidatorUtils.ENTRY_TYPE_VALUES_REGEX_15_16;
             valuesAccepted = CellErrorEntryType.VALUES_ACCEPTED_15_16;
