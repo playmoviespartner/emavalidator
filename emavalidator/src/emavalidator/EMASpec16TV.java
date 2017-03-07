@@ -36,7 +36,7 @@ import emavalidator.columns.EpisodeNumber;
 import emavalidator.columns.EpisodeProductID;
 import emavalidator.columns.EpisodeTitleDisplayUnlimited;
 import emavalidator.columns.EpisodeTitleInternalAlias;
-import emavalidator.columns.ExceptionsFlag;
+import emavalidator.columns.ExceptionFlag;
 import emavalidator.columns.FixedEndDate;
 import emavalidator.columns.FormatProfile;
 import emavalidator.columns.HoldbackExclusionLanguage;
@@ -80,10 +80,10 @@ import emavalidator.validators.RowValidatorCaptionExemption;
 import emavalidator.validators.RowValidatorCaptionIncluded;
 import emavalidator.validators.RowValidatorDuplicate;
 import emavalidator.validators.RowValidatorDuplicateEpisodeNumber;
+import emavalidator.validators.RowValidatorEIDRs;
 import emavalidator.validators.RowValidatorEntryType;
 import emavalidator.validators.RowValidatorEpisodeNumber;
 import emavalidator.validators.RowValidatorQuestionableStart;
-import emavalidator.validators.RowValidatorEIDRs;
 import emavalidator.validators.RowValidatorStartLessEnd;
 import emavalidator.validators.RowValidatorSuppressionPreorder;
 import emavalidator.validators.RowValidatorTierOrPrice;
@@ -172,7 +172,7 @@ public class EMASpec16TV extends AbstractEMASpec
         this.columnSpec.addColumnDefinition(new ReleaseYear());                                   // optional, year values only
         this.columnSpec.addColumnDefinition(new ReleaseHistoryOriginal());                        // optional, exhaustively checked
         this.columnSpec.addColumnDefinition(new ReleaseHistoryPhysicalHV());                      // optional, exhaustively checked
-        this.columnSpec.addColumnDefinition(new ExceptionsFlag());                                 // optional, enumerated values
+        this.columnSpec.addColumnDefinition(new ExceptionFlag());                                 // optional, enumerated values
         this.columnSpec.addColumnDefinition(new RatingSystem());                                  // optional, no symbols
         this.columnSpec.addColumnDefinition(new RatingValue());                                   // optional, no symbols
         this.columnSpec.addColumnDefinition(new RatingReason());                                  // optional, CSV
