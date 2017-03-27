@@ -29,6 +29,9 @@ public class RowErrorEIDRValueCheck extends AbstractErrorEntry
     public static final String ERROR_EPISODE_CONTENT_ID_CANNOT_HAVE_VALUE = "EpisodeContentID cannot contain a value for the specified WorkType.";
     public static final String ERROR_EPISODE_ID_CANNOT_HAVE_VALUE = "EpisodeID cannot contain a value for the specified WorkType.";
 
+    public static final String ERROR_BOTH_EPISODE_IDS_EMPTY = "EpisodeID and EpisodeContentID cannot both be empty for an Episode WorkType.";
+    public static final String ERROR_BOTH_SEASON_IDS_EMPTY = "SeasonID and SeasonContentID cannot both be empty for a Series WorkType.";
+    
     public static final String EXPECTED_BLANK = "";
     
     public RowErrorEIDRValueCheck(int rowNumber, String errorMessage, String actualValue, String expectedValue)

@@ -27,7 +27,8 @@ public class SeriesContentID extends AbstractColumnDefinition
     public void buildValidators()
     {
         this.validators.add(new CellValidatorRegexFormat(new String[]{
-                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX},
+                            ValidatorUtils.EIDR_FORMAT_1_7_REGEX,
+                            ValidatorUtils.EMPTY_STRING_REGEX},
                             false,
                             ErrorLevel.ERROR,
                             CellErrorSpecificValueFormat.EIDR_FORMAT_ERROR,

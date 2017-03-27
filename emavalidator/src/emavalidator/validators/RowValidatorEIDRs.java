@@ -25,6 +25,7 @@ import emavalidator.columns.EpisodeContentID;
 import emavalidator.columns.EpisodeID;
 import emavalidator.columns.SeasonAltID;
 import emavalidator.columns.SeasonContentID;
+import emavalidator.columns.SeasonID;
 import emavalidator.columns.SeriesAltID;
 import emavalidator.columns.SeriesContentID;
 import emavalidator.columns.WorkType;
@@ -48,38 +49,45 @@ public class RowValidatorEIDRs extends AbstractRowValidator
             if(this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17TV)
             {
                 String episodeID     = rowValues.get(EpisodeID.class.getSimpleName());     // required if episode EIDR not provided
-                String episodeEidrID = rowValues.get(EpisodeContentID.class.getSimpleName());  // v1.7 EIDR Episode ID
+                String episodeContentID = rowValues.get(EpisodeContentID.class.getSimpleName());  // v1.7 EIDR Episode ID
+//                String alid          = rowValues.get(ALID.class.getSimpleName());
+                String seasonID      = rowValues.get(SeasonID.class.getSimpleName());
+                String seasonContentID  = rowValues.get(SeasonContentID.class.getSimpleName());
                 
                 if (WorkType.isEpisode(workType)) {
-                    if (episodeID.isEmpty()) {
+                    // Fail if both EpisodeID and EpisodeContentID are empty.
+                    if (episodeID.isEmpty() && episodeContentID.isEmpty()) {
                         ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber,
-                                                                        RowErrorEIDRValueCheck.ERROR_NO_EIDR_OR_ID,
-                                                                        "EpisodeID cannot be empty for an Episode WorkType.",
+                                                                        RowErrorEIDRValueCheck.ERROR_BOTH_EPISODE_IDS_EMPTY,
+                                                                        "",
                                                                         RowErrorEIDRValueCheck.EXPECTED_EIDR_OR_ID));
                         validateSuccessfully = false;
                     }
-                    if (episodeEidrID.isEmpty()) {
-                        ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber, 
-                                                                        RowErrorEIDRValueCheck.ERROR_CANNOT_BE_BLANK,
-                                                                        episodeEidrID,
-                                                                        RowErrorEIDRValueCheck.EXPECTED_EIDR));
-                        validateSuccessfully = false;
-                    }
+                    
+                    // Allow pass if either one of the IDs are available.
                 }
                 
                 if (WorkType.isSeason(workType)) {
+                    // Fail if both SeasonID and SeasonContentID are empty.
+                    if (seasonID.isEmpty() && seasonContentID.isEmpty()) {
+                        ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber,
+                                                                        RowErrorEIDRValueCheck.ERROR_BOTH_SEASON_IDS_EMPTY,
+                                                                        "",
+                                                                        RowErrorEIDRValueCheck.EXPECTED_EIDR_OR_ID));
+                        validateSuccessfully = false;
+                    }
                     if (!episodeID.isEmpty()) {
                         ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber,
                                                                         RowErrorEIDRValueCheck.ERROR_EPISODE_ID_CANNOT_HAVE_VALUE,
                                                                         episodeID,
                                                                         RowErrorEIDRValueCheck.EXPECTED_BLANK));
                     }
-                    if (!episodeEidrID.isEmpty()) {
+                    if (!episodeContentID.isEmpty()) {
                         ErrorLog.appendError(new RowErrorEIDRValueCheck(rowNumber, 
                                                                         RowErrorEIDRValueCheck.ERROR_EPISODE_CONTENT_ID_CANNOT_HAVE_VALUE, 
-                                                                        episodeEidrID, 
+                                                                        episodeContentID, 
                                                                         RowErrorEIDRValueCheck.EXPECTED_BLANK));
-                    }
+                    }                    
                 }
             }
             else if (this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17) 

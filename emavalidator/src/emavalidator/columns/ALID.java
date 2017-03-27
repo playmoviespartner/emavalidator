@@ -16,11 +16,7 @@ limitations under the License.
 package emavalidator.columns;
 
 import emavalidator.AbstractColumnDefinition;
-import emavalidator.AbstractErrorEntry.ErrorLevel;
 import emavalidator.errors.CellErrorSpecialSymbols;
-import emavalidator.errors.CellErrorSpecificValueFormat;
-import emavalidator.validators.CellValidatorNotEmpty;
-import emavalidator.validators.CellValidatorRegexFormat;
 import emavalidator.validators.CellValidatorSpecialSymbols;
 import emavalidator.validators.ValidatorUtils;
 
@@ -33,12 +29,12 @@ public class ALID extends AbstractColumnDefinition
                 ValidatorUtils.ILLEGAL_METADATA_CHARACTERS,
                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS,
                 CellErrorSpecialSymbols.ILLEGAL_METADATA_CHARACTERS_EXPECTED));
-        this.validators.add(new CellValidatorRegexFormat(new String[]{
-                ValidatorUtils.ANY_NON_BLANK_STRING_REGEX},
-                false,
-                ErrorLevel.ERROR,
-                CellErrorSpecificValueFormat.ANY_NON_BLANK_STRING_ERROR,
-                CellErrorSpecificValueFormat.EXPECTED_VALUES_ANY_NON_BLANK_STRING));
-        this.validators.add(new CellValidatorNotEmpty());
+//        this.validators.add(new CellValidatorRegexFormat(new String[]{
+//                ValidatorUtils.ANY_NON_BLANK_STRING_REGEX},
+//                false,
+//                ErrorLevel.ERROR,
+//                CellErrorSpecificValueFormat.ANY_NON_BLANK_STRING_ERROR,
+//                CellErrorSpecificValueFormat.EXPECTED_VALUES_ANY_NON_BLANK_STRING));
+//        this.validators.add(new CellValidatorNotEmpty());
     }
 }
