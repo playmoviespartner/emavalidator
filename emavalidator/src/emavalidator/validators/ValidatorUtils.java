@@ -102,7 +102,7 @@ public class ValidatorUtils
      * urn:eidr:10.5240:7791-8534-2C23-9030-8610-5
      * urn:eidr:10.5240:1489-49A2-3956-4B2D-BEFK-6
      */
-    public static final String EIDR_FORMAT_1_7_REGEX = "([\\w]{3}:[\\w]{4}:([0-9]{2}\\.[0-9]{4}:)[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2})|[\\w]+:[\\w]+:[-\\w]+:[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2}";
+    public static final String EIDR_FORMAT_1_7_REGEX = "([0-9]{2}\\.[0-9]{4}/)?[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2}|([\\w]{3}:[\\w]{4}:([0-9]{2}\\.[0-9]{4}:)[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2})|[\\w]+:[\\w]+:[-\\w]+:[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{1,2}";
     
     /**
      * 1, 20, 450, 5810931
@@ -306,7 +306,9 @@ public class ValidatorUtils
             }
             return true;
         }
-        catch (ParseException e) { }
+        catch (ParseException e) {
+            System.out.println(e);
+        }
 
         return false;
     }

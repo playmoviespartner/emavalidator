@@ -20,13 +20,13 @@ import emavalidator.AbstractErrorEntry;
 public class CellErrorDateValue extends AbstractErrorEntry
 {
     public static final String YEAR_FORMAT_ERROR = "Year Value Error: The value for this cell must be a specific year format.";
-    public static final String DATE_FORMAT_ERROR = "Date Value Error: The value for this cell must be one of two date formats.";
+    public static final String DATE_FORMAT_ERROR = "Date Value Error: The value for this cell is invalid, it must be a valid date and must be one of two date formats.";
     public static final String DATE_START_END_ERROR = "Date Value Error: The start date must be before the end date.";
     public static final String DATE_VALIDATION_ERROR = "Date Value Error: The given date is invalid.";
     public static final String START_DATE_EMPTY_ERROR = "Date Value Error: The start date must not be empty.";
     public static final String END_DATE_EMPTY_ERROR = "Date Value Error: The end date must not be empty.";
     
-    public static final String EXPECTED_VALUES        = "Dates must be in (1) YYYY-MM-DD or (2) ISO-8601 Date+Time format.";
+    public static final String EXPECTED_VALUES        = "Dates must be in (1) YYYY-MM-DD or (2) ISO-8601 Date+Time format. Also, please check the value to be a valid calendar date.";
     public static final String EXPECTED_VALUES_YEAR = "YYYY values such as 2014, 2039, 1825, etc.";
 
     public CellErrorDateValue(int rowNumber, int columnNumber, String message, String value, String expected)

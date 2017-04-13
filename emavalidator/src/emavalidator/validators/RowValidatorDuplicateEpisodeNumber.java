@@ -10,6 +10,7 @@ import emavalidator.columns.End;
 import emavalidator.columns.EpisodeNumber;
 import emavalidator.columns.FormatProfile;
 import emavalidator.columns.LicenseType;
+import emavalidator.columns.LocalizationType;
 import emavalidator.columns.SeasonNumber;
 import emavalidator.columns.SeriesTitleInternalAlias;
 import emavalidator.columns.Start;
@@ -41,19 +42,21 @@ public class RowValidatorDuplicateEpisodeNumber extends AbstractRowValidator
 
                 // This RowValidator is only used for TV.
                 // EMA Version 1.6 TV
-                if (this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV) 
+                if (this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec16TV ||
+                        this.emaVersion == AbstractEMASpec.EMAVersion.EMASpec17TV) 
                 {
                     // Get all the necessary values from the row to concatenate a UID for Movie.
                     String territory = rowValues.get(Territory.class.getSimpleName());
                     String title = rowValues.get(SeriesTitleInternalAlias.class.getSimpleName());
                     String seasonNumber = rowValues.get(SeasonNumber.class.getSimpleName());
                     episodeNumber = rowValues.get(EpisodeNumber.class.getSimpleName());
+                    String localizationType = rowValues.get(LocalizationType.class.getSimpleName());
                     String licenseType = rowValues.get(LicenseType.class.getSimpleName());
                     String formatProfile = rowValues.get(FormatProfile.class.getSimpleName());
                     String start = rowValues.get(Start.class.getSimpleName());
                     String end = rowValues.get(End.class.getSimpleName());
                     
-                    String[] array = {territory, title, seasonNumber, episodeNumber, licenseType, formatProfile, start, end};
+                    String[] array = {territory, title, seasonNumber, episodeNumber, localizationType, licenseType, formatProfile, start, end};
                     
                     for(int i = 0; i < array.length; i++) {
                         uniqueColumnsArray.add(array[i]);
